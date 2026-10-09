@@ -1,5 +1,4 @@
-import { put } from '@vercel/blob';
-import { checkKey, readBody, noStore } from './_lib.js';
+import { checkKey, readBody, noStore, putAuto, imageUrl } from './_lib.js';
 
 const TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 
@@ -14,12 +13,11 @@ export default async function handler(req, res) {
     const buf = Buffer.from(m[2], 'base64');
     if (buf.length > 3_500_000) return res.status(413).json({ error: 'too_large' });
     const type = m[1].toLowerCase();
-    const blob = await put(`img/${Date.now()}.${TYPES[type]}`, buf, {
-      access: 'public',
+    const blob = await putAuto(`img/${Date.now()}.${TYPES[type]}`, buf, {
       contentType: type,
       addRandomSuffix: true,
     });
-    return res.status(200).json({ url: blob.url });
+    return res.status(200).json({ url: imageUrl(blob) });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: 'server', message: String(e && e.message || e) });

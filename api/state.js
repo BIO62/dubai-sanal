@@ -1,5 +1,5 @@
-import { put, list } from '@vercel/blob';
-import { checkKey, readBody, noStore } from './_lib.js';
+import { list } from '@vercel/blob';
+import { checkKey, readBody, noStore, putAuto, readText } from './_lib.js';
 
 // Every save is a new file under state/, so the newest one is the current page
 // and older ones stay as history.
@@ -21,9 +21,9 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const b = await latest();
       if (!b) return res.status(404).json({ error: 'empty' });
-      const r = await fetch(b.url, { cache: 'no-store' });
-      const state = await r.json();
-      return res.status(200).json({ state, savedAt: b.uploadedAt });
+      const text = await readText(b.pathname);
+      if (!text) return res.status(404).json({ error: 'empty' });
+      return res.status(200).json({ state: JSON.parse(text), savedAt: b.uploadedAt });
     }
     if (req.method === 'POST') {
       if (!checkKey(req)) return res.status(401).json({ error: 'bad_key' });
@@ -31,8 +31,7 @@ export default async function handler(req, res) {
       if (!body || typeof body.state !== 'object') return res.status(400).json({ error: 'bad_body' });
       const text = JSON.stringify(body.state);
       if (text.length > 3_000_000) return res.status(413).json({ error: 'too_large' });
-      await put(`state/${Date.now()}.json`, text, {
-        access: 'public',
+      await putAuto(`state/${Date.now()}.json`, text, {
         contentType: 'application/json',
         addRandomSuffix: true,
       });

@@ -5,7 +5,7 @@
 ## Vercel дээр тавих (нэг удаа)
 
 1. vercel.com → **Add New → Project** → энэ репог **Import** → **Deploy**.
-2. Төсөл дотор **Storage → Create → Blob** → нэр өгөөд **Public** сонгоно → энэ төсөлтэй холбоно (Connect).
+2. Төсөл дотор **Storage → Create → Blob** → нэр өгнө (Private, Public аль нь ч болно) → энэ төсөлтэй холбоно (Connect).
    `BLOB_READ_WRITE_TOKEN` автоматаар нэмэгдэнэ.
 3. **Settings → Environment Variables** → `EDIT_PASSWORD` = засах нууц үг (Production, Preview хоёуланд).
 4. **Deployments → сүүлийнх → Redeploy** (шинэ тохиргоо орохын тулд).
@@ -23,4 +23,5 @@
 - `api/state.js` — агуулга унших / хадгалах
 - `api/upload.js` — зураг хуулах
 - `api/login.js` — нууц үг шалгах
+- `api/img.js` — Private сангаас зураг харуулах
 - `src/` — хуудасны эх загвар ба анхны агуулга (`python3 src/build.py` нь `public/index.html`-ийг дахин үүсгэнэ)
