@@ -318,7 +318,7 @@ $('fileIn').addEventListener('change',function(){
       uploading--;
       if(j._status===200&&j.url){set(target,j.url);dirty();render();say('Зураг солигдлоо. Хадгалахаа мартуузай.')}
       else if(j._status===401){render();lostKey()}
-      else{render();say('Зураг хуулж чадсангүй. Дахин оролдоно уу.',true)}
+      else{render();say('Зураг хуулж чадсангүй ('+j._status+'): '+(j.message||j.error||'тодорхойгүй алдаа'),true)}
     },function(){uploading--;render();say('Сүлжээний алдаа. Зураг хуулагдсангүй.',true)});
   };im.onerror=function(){say('Энэ файлыг зураг болгож уншиж чадсангүй.',true)};im.src=fr.result};
   fr.readAsDataURL(f);
@@ -349,7 +349,7 @@ $('btnSave').addEventListener('click',function(){
     if(j._status===200){ORIGINAL=JSON.stringify(S);clearDraft();setMode(false);say('Хадгаллаа')}
     else if(j._status===401)lostKey();
     else if(j._status===413)say('Хэт том байна. Зарим зургийг устгаад дахин хадгална уу.',true);
-    else say('Хадгалж чадсангүй. Дахин оролдоно уу.',true);
+    else say('Хадгалж чадсангүй ('+j._status+'): '+(j.message||j.error||'тодорхойгүй алдаа'),true);
   },function(){btn.disabled=false;say('Сүлжээний алдаа. Засвар энэ цонхонд хадгалагдсан, дахин дарна уу.',true)});
 });
 window.addEventListener('beforeunload',function(e){if(editing&&JSON.stringify(S)!==ORIGINAL){e.preventDefault();e.returnValue=''}});
