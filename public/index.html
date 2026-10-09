@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Дубай багц аяллын санал</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+<style id="page-style">
+/* Layout: proposal folio — hero photo band, key facts strip, package cards 2-up, reference tables, checklist. Edit mode overlays every field in place. */
+:root{
+  --bg:#F3F6F7; --surface:#FFFFFF; --sunk:#E8EEF0; --fg:#14212B; --muted:#5A6A75; --line:#D5DEE2;
+  --accent:#0B7A84; --accent-ink:#FFFFFF; --sand:#A9772C; --sand-soft:#F6ECDB; --danger:#B4372F; --ok:#2E7D4F;
+  --edit:#FFF6D6; --edit-line:#E0B341;
+  --display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D151B; --surface:#15212A; --sunk:#1B2933; --fg:#E7EEF1; --muted:#9AAAB4; --line:#2A3A45;
+  --accent:#3BB4BE; --accent-ink:#06191C; --sand:#E2B46A; --sand-soft:#2E2617; --danger:#F07A70; --ok:#6CCB93;
+  --edit:#2C2712; --edit-line:#B8902E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D151B; --surface:#15212A; --sunk:#1B2933; --fg:#E7EEF1; --muted:#9AAAB4; --line:#2A3A45;
+  --accent:#3BB4BE; --accent-ink:#06191C; --sand:#E2B46A; --sand-soft:#2E2617; --danger:#F07A70; --ok:#6CCB93;
+  --edit:#2C2712; --edit-line:#B8902E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.2}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* toolbar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bar-title{font-family:var(--display);font-size:13px;letter-spacing:.04em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{font-size:13px;color:var(--muted)}
+.status.err{color:var(--danger)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:7px 14px;font-weight:600;font-size:14px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.5;cursor:default}
+
+/* hero */
+.hero{position:relative;margin-top:16px;border-radius:14px;overflow:hidden;min-height:300px;display:flex;align-items:flex-end;background:#1b2a33}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,16,22,.05) 20%,rgba(8,16,22,.82) 100%)}
+.hero-in{position:relative;z-index:1;padding:28px;color:#fff;max-width:760px;display:grid;gap:10px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.hero h1{font-size:clamp(26px,4.4vw,42px);font-weight:700}
+.hero p{margin:0;font-size:16px;opacity:.95;max-width:62ch}
+.hero .meta{font-size:13px;opacity:.8}
+.img-btn{position:absolute;z-index:2;top:12px;right:12px}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:4px;position:relative}
+.fact .v{font-family:var(--display);font-size:22px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.fact .l{font-size:14px;color:var(--muted)}
+
+section{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.sec-head h2{font-size:20px;font-weight:700}
+.lead{color:var(--muted);max-width:70ch;margin:0 0 16px;white-space:pre-wrap}
+
+/* packages */
+.pkgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:640px){.pkgs{grid-template-columns:1fr}}
+.pkg{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;position:relative;min-width:0}
+.pkg .ph{position:relative;aspect-ratio:16/10;background:var(--sunk);max-width:100%}
+.pkg .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.pkg .ph .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
+.pkg-body{padding:16px;display:grid;gap:10px;flex:1;align-content:start}
+.pkg-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pkg h3{font-size:17px}
+.tag{font-size:12px;font-weight:600;color:var(--sand);background:var(--sand-soft);border-radius:999px;padding:2px 10px}
+.pkg .sum{margin:0;color:var(--muted);font-size:14px;white-space:pre-wrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.chips li{font-size:13px;background:var(--sunk);border-radius:6px;padding:3px 9px;display:flex;align-items:center;gap:4px}
+.prices{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:10px;margin-top:auto}
+.prow{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.prow .k{color:var(--muted)}
+.prow .val{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.prow .val.tbd{color:var(--sand);font-weight:600}
+.pkg .note{font-size:13px;color:var(--muted);margin:0;white-space:pre-wrap}
+.common{margin-top:16px;background:var(--sunk);border-radius:var(--r);padding:14px 16px;font-size:14px;white-space:pre-wrap}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--sunk)}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;white-space:pre-wrap}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.first{font-weight:600}
+td.act{width:36px;padding:6px}
+
+/* risks & steps */
+.risks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.risk{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--sand);border-radius:8px;padding:14px;display:grid;gap:4px;position:relative}
+.risk b{font-weight:700}
+.risk span{color:var(--muted);font-size:14px;white-space:pre-wrap}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.steps input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.steps .t{flex:1;min-width:0;white-space:pre-wrap}
+.steps li.done .t{color:var(--muted);text-decoration:line-through}
+.srcs{margin:0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
+.srcs li{overflow-wrap:anywhere}
+footer{margin-top:40px;font-size:13px;color:var(--muted)}
+
+/* edit mode */
+.ed [data-path]{background:var(--edit);outline:1px dashed var(--edit-line);outline-offset:1px;border-radius:3px;min-width:2ch;display:inline-block}
+.ed .hero [data-path]{background:rgba(255,246,214,.18);outline-color:#E0B341}
+.ed td [data-path],.ed .steps .t[data-path],.ed .lead[data-path],.ed .common[data-path],.ed .sum[data-path],.ed .note[data-path]{display:block}
+.x{border:0;background:transparent;color:var(--danger);font-weight:700;font-size:16px;line-height:1;padding:2px 6px;border-radius:6px}
+.x:hover{background:color-mix(in srgb,var(--danger) 14%,transparent)}
+.pkg>.x{left:10px;right:auto!important;top:10px!important}
+.fact>.x,.risk>.x,.pkg>.x{position:absolute;top:6px;right:6px;z-index:2;background:var(--surface);border:1px solid var(--line)}
+.add{border:1px dashed var(--accent);color:var(--accent);background:transparent;border-radius:8px;padding:8px 14px;font-weight:600;font-size:14px;margin-top:10px}
+.chips .add{margin:0;padding:2px 9px;font-size:13px}
+.ed-only{display:none}
+.ed .ed-only{display:inline-flex}
+.banner{margin-top:12px;background:var(--sand-soft);border:1px solid var(--sand);border-radius:8px;padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}
+@media (max-width:520px){.hero-in{padding:20px}.hero{min-height:260px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+html{scroll-padding-top:70px}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+.login{position:fixed;inset:0;z-index:50;background:rgba(8,16,22,.55);display:grid;place-items:center;padding:16px}
+.login form{background:var(--surface);color:var(--fg);border-radius:12px;padding:22px;width:min(360px,100%);display:grid;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login h3{font-size:17px}
+.login p{margin:0;color:var(--muted);font-size:14px}
+.login input{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.login .row{display:flex;gap:8px;justify-content:flex-end}
+.login .err{color:var(--danger);font-size:13px;min-height:1em}
+.ph .busy{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,16,22,.45);color:#fff;font-weight:600;font-size:14px;z-index:3}
+</style>
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <div class="bar-title" id="barTitle">Дубай багц аяллын санал</div>
+  <span class="status" id="status" role="status" aria-live="polite"></span>
+  <button class="btn" id="btnCancel" type="button" hidden>Цуцлах</button>
+  <button class="btn primary" id="btnSave" type="button" hidden>Хадгалах</button>
+  <button class="btn" id="btnEdit" type="button">Засах</button>
+</div></div>
+<div class="wrap" id="app"></div>
+<input type="file" id="fileIn" accept="image/*" hidden>
+<div class="login" id="login" hidden>
+  <form id="loginForm">
+    <h3>Засах горимд орох</h3>
+    <p>Засах нууц үгээ оруулна уу.</p>
+    <input type="password" id="pw" autocomplete="current-password" placeholder="Нууц үг" required>
+    <div class="err" id="pwErr"></div>
+    <div class="row"><button class="btn" type="button" id="pwCancel">Болих</button><button class="btn primary" type="submit" id="pwOk">Нэвтрэх</button></div>
+  </form>
+</div>
+<script type="application/json" id="state">{"eyebrow": "Санал · Аялал жуулчлал", "title": "Дубай багц аяллын санал", "lead": "Одоогоор Дубай руу бодитой явах багц аялал зөвхөн Kompas Mongolia-д байна. 3* буудалтай хамгийн хямд багц нь 6,290,000₮. Холбогдсон бусад 5 компани Дубайн аяллаа цуцалсан.", "meta": "2026.10.09-ний байдлаар · Дарамжавын утасны судалгаа, Kompas-ын 4 багц, компаниудын сайт", "heroImg": "img/hero.jpg", "facts": [{"value": "1 / 6", "label": "компани одоо Дубай руу аялал гаргаж байна"}, {"value": "6,290,000₮", "label": "хамгийн хямд багц, 3* буудал, том хүн"}, {"value": "8 өдөр", "label": "Air Astana, Алматаар дамжина"}], "pkgTitle": "Kompas Mongolia-ийн 4 багц", "pkgLead": "Дөрвөн багц нь 8 өдөр бөгөөд Air Astana-аар Алматаар дамжина. Хөтөч нь англи хэлтэй гадаад хүн. Багцууд зөвхөн 3–5 дахь өдрийн үзвэрээрээ ялгаатай. Үнэ буудлаас хамаарна.", "packages": [{"name": "Багц 1", "tag": "Сонгодог аялал", "img": "img/p1.jpg", "summary": "Анх удаа явж буй хүнд хамгийн тохиромжтой: хот, Абу Даби, цөл гурвыг бүгдийг нь хамарна.", "highlights": ["Dhow Cruise оройн зоог", "Дубай хотын аялал", "Абу Даби: Louvre, Их Моск", "Элсэн цөлийн сафари", "1.5 чөлөөт өдөр"], "price3": "6,290,000₮-өөс", "price45": "Тодруулах", "note": ""}, {"name": "Багц 2", "tag": "Соёл, урлаг", "img": "img/p2.jpg", "summary": "Сафаригийн оронд AYA Universe гэрэл, урлагийн цогцолбортой.", "highlights": ["Dhow Cruise оройн зоог", "Дубай хотын аялал", "Абу Даби: Louvre, Их Моск", "AYA Universe", "1.5 чөлөөт өдөр"], "price3": "Тодруулах", "price45": "Тодруулах", "note": ""}, {"name": "Багц 3", "tag": "Хүүхэдтэй гэр бүл", "img": "img/p3.jpg", "summary": "Абу Даби ороогүй. Оронд нь Atlantis-ийн усан парк, сафари, AYA Universe-тэй.", "highlights": ["Дубай хотын аялал", "Aquaventure усан парк", "Элсэн цөлийн сафари", "AYA Universe", "1.5 чөлөөт өдөр"], "price3": "Тодруулах", "price45": "Тодруулах", "note": "Хөтөлбөрт «4-р өдөр» хоёр удаа бичигдсэн тул өдрийн дарааллыг тодруулах."}, {"name": "Багц 4", "tag": "Burj Khalifa", "img": "img/p4.jpg", "summary": "Хотын ерөнхий аяллын оронд Burj Khalifa-гийн 124–125 давхарт гарна.", "highlights": ["Dhow Cruise оройн зоог", "Burj Khalifa 124–125 давхар", "Абу Даби: Louvre, Их Моск", "AYA Universe", "1.5 чөлөөт өдөр"], "price3": "Тодруулах", "price45": "Тодруулах", "note": ""}], "common": "Бүх багцад ижил: УБ-аас 08:30-д хөдөлж Алматаар дамжина. Дубайд 2-р өдрийн 07:30–13:00 хооронд газардана. Буцахдаа 7-р өдрийн 21:30-д нисээд 8-р өдрийн 20:45-д УБ-д буна. Хөтөлбөрт буудлын нэр, үнэд багтсан зүйлс бичигдээгүй.", "contactsTitle": "Холбогдсон компаниуд", "contactsLead": "Дарамжав 6 аяллын компанитай утсаар холбогдсон. Ихэнх нь Персийн булангийн нөхцөл байдлаас болж Дубайн аяллаа цуцалсан.", "contacts": [{"company": "Kompas Mongolia", "answer": "4 багц санал болгосон, 3* буудалтай хамгийн хямд нь 6,290,000₮", "next": "Багц бүрийн үнийг авах"}, {"company": "Монгол аялал", "answer": "Одоо аялалгүй, 7 хоногийн дараа гарч магадгүй", "next": "Дугаар нь авсан, дахин холбогдох"}, {"company": "MantraTour", "answer": "Дубай руу аялалгүй", "next": "—"}, {"company": "New Juulchin Tours", "answer": "Дубай руу аялалгүй", "next": "—"}, {"company": "MU Travel", "answer": "Дубай руу аялалгүй", "next": "—"}, {"company": "Aravt Travel Mongolia", "answer": "Дубай руу аялалгүй", "next": "Сайтдаа 5,190,000₮-өөс гэсэн зар байгаа ч одоо явуулахгүй"}], "sitesTitle": "Сайтад нийтлэгдсэн үнэ", "sitesLead": "Бусад компанийн сайтад том хүний үнэ 5.19–6.99 сая ₮ байна. Эдгээр аялал одоогоор бараг явахгүй байгаа тул үнийг зөвхөн жишиг болгон харна уу. 2026.10.07-нд сайтуудаас авсан.", "sites": [{"company": "Kompas Mongolia", "adult": "6,290,000-аас (3*)", "newyear": "—", "child": "—", "route": "Алматаар", "status": "Хөтөлбөр байгаа цорын ганц", "phone": "—"}, {"company": "Аравт Травел", "adult": "5,190,000-аас", "newyear": "—", "child": "—", "route": "Алматаар", "status": "Дубай явуулахгүй гэсэн", "phone": "7757-7077"}, {"company": "Газарчин Травел", "adult": "5,990,000", "newyear": "6,690,000", "child": "4,490,000–4,990,000", "route": "Бээжингээр", "status": "Хуваарь 12/19–02/17", "phone": "7000-1160"}, {"company": "Air Market", "adult": "5,990,000", "newyear": "6,990,000", "child": "5,390,000", "route": "Бээжингээр", "status": "Шинэ жил 12/27, 12/28", "phone": "9908-5050"}, {"company": "Дэлхий Трэвел X", "adult": "5,990,000", "newyear": "—", "child": "4,490,000–4,990,000", "route": "Бээжингээр", "status": "Сайтад хуучин хуваарь", "phone": "7200-7722"}, {"company": "Western Travel", "adult": "5,990,000–6,990,000", "newyear": "—", "child": "—", "route": "Бээжингээр", "status": "Сайтад «2025.10–2026.03»", "phone": "7509-7007"}], "risksTitle": "Эрсдэл ба анхаарах зүйлс", "risksLead": "Хамгийн том эрсдэл нь нислэг цуцлагдах. Персийн булангийн мөргөлдөөн 2026 оны 3-р сараас үргэлжилж байна.", "risks": [{"title": "Нислэг", "text": "Air Astana-ийн Алматы–Дубай нислэг 2026.10.01-нээс сэргэсэн. Kompas-ын багцууд энэ нислэгээр явна."}, {"title": "Аюулгүй байдал", "text": "АНУ 2026.08.29-нд АНЭУ-д аялах зөвлөмжийг 3-р түвшин («Аялахаа эргэн бод») болгосон."}, {"title": "Виз", "text": "Монгол Улсын жирийн паспорттай иргэд АНЭУ-д визгүй. Паспорт 6 сараас дээш хугацаатай байх."}, {"title": "Хөтөч", "text": "Kompas-ын багцад англи хэлтэй гадаад хөтөч. Монгол хөтөч хэрэгтэй эсэхийг шийдэх."}, {"title": "Гэрээ", "text": "Нислэг цуцлагдвал мөнгө буцаах нөхцөл, даатгал дайны эрсдэлийг хамардаг эсэхийг гэрээнд тусгуулах."}], "stepsTitle": "Дараагийн алхам", "stepsLead": "Одоогоор Kompas Mongolia-г сонгохоос өөр боломж алга. Энгийн аялалд Багц 1, хүүхэдтэй бол Багц 3 тохирно.", "steps": [{"text": "Kompas Mongolia-аас 4 багц бүрийн үнийг буудлын зэрэглэл (3*, 4*, 5*) тус бүрээр авах", "done": false}, {"text": "Буудлын нэр, үнэд багтсан зүйлс (хоол, тасалбар, даатгал), аялал гарах огноог тодруулах", "done": false}, {"text": "Нислэг цуцлагдвал мөнгө буцаах нөхцөлийг асуух", "done": false}, {"text": "Монгол аялал руу дахин залгаж аялал гарах эсэхийг шалгах", "done": false}, {"text": "Дарамжавын дуут мессежийн мэдээллийг энд нэмэх", "done": false}], "sourcesTitle": "Эх сурвалж", "sources": [{"label": "Дарамжавын утасны яриа, Kompas Mongolia-ийн «Багц 1–4» PDF (2026.10.09)", "url": ""}, {"label": "Газарчин Травел — Дубай аялал", "url": "https://www.gazarchin.mn/gadaad-aylal/dubai-abu-dhabi/"}, {"label": "Аравт Травел — Дубай аялал", "url": "https://travel.aravtmongolia.com/tour/dubai/"}, {"label": "Air Market — АНЭУ, Дубай аялал", "url": "https://www.airmarket.mn/tour/8"}, {"label": "Дэлхий Трэвел X — Дубай аялал", "url": "https://travelx.mn/trip/93d5b4b5-d0fd-46f4-33a0-afa5d882d7ab"}, {"label": "Western Travel", "url": "https://westerntravel.mn/"}, {"label": "Air China өвлийн хуваарь — AeroRoutes", "url": "https://www.aeroroutes.com/eng/260810-canw26me"}, {"label": "Дубайн нислэг сэргэлт — Travel And Tour World", "url": "https://www.travelandtourworld.com/news/article/h2vtulfrev9g/"}, {"label": "АНЭУ аюулгүй байдал — Sitata", "url": "https://www.sitata.com/en/blog/dubai-travel-safety-iran-conflict-2026/"}, {"label": "Визгүй зорчих гэрээ — Dubai Eye", "url": "https://www.dubaieye1038.com/news/local/visa-free-travel-to-mongolia-for-uae-citizens"}]}</script>
+<script>
+(function(){
+var DEFAULT = document.getElementById('state').textContent;
+var ORIGINAL = DEFAULT;
+var S = JSON.parse(DEFAULT);
+var editing=false, imgTarget=null, KEY=null, uploading=0;
+var app=document.getElementById('app');
+var $=function(id){return document.getElementById(id)};
+try{KEY=sessionStorage.getItem('dubai-key')}catch(_){}
+var TPL={
+  facts:{value:'—',label:'Тайлбар'},
+  contacts:{company:'Компанийн нэр',answer:'',next:''},
+  packages:{name:'Шинэ багц',tag:'',img:'',summary:'',highlights:['Үзвэр'],price3:'Тодруулах',price45:'Тодруулах',note:''},
+  highlights:'Шинэ үзвэр',
+  sites:{company:'Компанийн нэр',adult:'',newyear:'',child:'',route:'',status:'',phone:''},
+  risks:{title:'Гарчиг',text:''},
+  steps:{text:'Шинэ алхам',done:false},
+  sources:{label:'Эх сурвалж',url:''}
+};
+function get(p){return p.split('.').reduce(function(o,k){return o==null?o:o[k]},S)}
+function set(p,v){var ks=p.split('.'),o=S;for(var i=0;i<ks.length-1;i++)o=o[ks[i]];o[ks[ks.length-1]]=v}
+function h(tag,attrs,kids){
+  var el=document.createElement(tag);
+  if(attrs)for(var k in attrs){var v=attrs[k];if(v==null||v===false)continue;
+    if(k==='text')el.textContent=v;else if(k==='class')el.className=v;else el.setAttribute(k,v===true?'':v)}
+  (kids||[]).forEach(function(c){if(c!=null)el.appendChild(typeof c==='string'?document.createTextNode(c):c)});
+  return el;
+}
+function T(tag,path,cls){
+  var v=get(path);var el=h(tag,{class:cls||null,text:v==null?'':String(v)});
+  if(editing){
+    el.setAttribute('data-path',path);
+    el.setAttribute('contenteditable','plaintext-only');
+    if(el.contentEditable!=='plaintext-only')el.setAttribute('contenteditable','true');
+    el.setAttribute('spellcheck','false');
+  }
+  return el;
+}
+function X(path,label){return editing?h('button',{class:'x','data-act':'del','data-path':path,'aria-label':label||'Устгах',title:label||'Устгах',type:'button',text:'×'}):null}
+function ADD(path,label){return editing?h('button',{class:'add','data-act':'add','data-path':path,type:'button',text:'+ '+label}):null}
+function sec(id,title,leadPath,body){
+  return h('section',{id:id},[h('div',{class:'sec-head'},[T('h2',title)]),leadPath?T('p',leadPath,'lead'):null].concat(body));
+}
+function imgBtn(path,has){return editing?h('button',{class:'btn img-btn','data-act':'img','data-path':path,type:'button',text:has?'Зураг солих':'Зураг нэмэх'}):null}
+function busy(path){return imgTarget===path&&uploading?h('div',{class:'busy',text:'Зураг хуулж байна…'}):null}
+
+function render(){
+  document.body.classList.toggle('ed',editing);
+  $('barTitle').textContent=S.title||'Дубай багц аяллын санал';
+  document.title=S.title||'Дубай багц аяллын санал';
+  app.textContent='';
+  app.appendChild(h('header',{class:'hero'},[
+    S.heroImg?h('img',{class:'bg',src:S.heroImg,alt:''}):null,
+    imgBtn('heroImg',!!S.heroImg),
+    h('div',{class:'hero-in'},[T('div','eyebrow','eyebrow'),T('h1','title'),T('p','lead'),h('div',{class:'meta'},[T('span','meta')])])
+  ]));
+  app.appendChild(h('div',{class:'facts'},S.facts.map(function(f,i){
+    return h('div',{class:'fact'},[X('facts.'+i),T('div','facts.'+i+'.value','v'),T('div','facts.'+i+'.label','l')]);
+  })));
+  if(editing)app.appendChild(ADD('facts','Тоон баримт нэмэх'));
+
+  var tbd=function(v){return !v||/тодруула/i.test(v)};
+  var pk=h('div',{class:'pkgs'},S.packages.map(function(p,i){
+    var b='packages.'+i;
+    var chips=h('ul',{class:'chips'},p.highlights.map(function(c,j){
+      return h('li',null,[T('span',b+'.highlights.'+j),X(b+'.highlights.'+j,'Үзвэр устгах')]);
+    }).concat(editing?[h('li',{style:'background:transparent;padding:0'},[ADD(b+'.highlights','Үзвэр')])]:[]));
+    return h('article',{class:'pkg'},[
+      X(b,'Багц устгах'),
+      h('div',{class:'ph'},[p.img?h('img',{src:p.img,alt:p.name||'',loading:'lazy'}):h('div',{class:'noimg',text:'Зураггүй'}),imgBtn(b+'.img',!!p.img),busy(b+'.img')]),
+      h('div',{class:'pkg-body'},[
+        h('div',{class:'pkg-top'},[T('h3',b+'.name'),(p.tag||editing)?T('span',b+'.tag','tag'):null]),
+        (p.summary||editing)?T('p',b+'.summary','sum'):null,
+        chips,
+        h('div',{class:'prices'},[
+          h('div',{class:'prow'},[h('span',{class:'k',text:'3* буудал, том хүн'}),T('span',b+'.price3','val'+(tbd(p.price3)?' tbd':''))]),
+          h('div',{class:'prow'},[h('span',{class:'k',text:'4–5* буудал, том хүн'}),T('span',b+'.price45','val'+(tbd(p.price45)?' tbd':''))]),
+          (p.note||editing)?T('p',b+'.note','note'):null
+        ])
+      ])
+    ]);
+  }));
+  app.appendChild(sec('packages','pkgTitle','pkgLead',[pk,ADD('packages','Багц нэмэх'),T('div','common','common')]));
+
+  function table(key,cols){
+    var head=h('tr',null,cols.map(function(c){return h('th',{text:c[1]})}).concat(editing?[h('th',{text:''})]:[]));
+    var rows=S[key].map(function(r,i){
+      return h('tr',null,cols.map(function(c,ci){return h('td',{class:(ci===0?'first ':'')+(c[2]||'')},[T('span',key+'.'+i+'.'+c[0])])})
+        .concat(editing?[h('td',{class:'act'},[X(key+'.'+i,'Мөр устгах')])]:[]));
+    });
+    return [h('div',{class:'tbl-wrap'},[h('table',null,[h('thead',null,[head]),h('tbody',null,rows)])]),ADD(key,'Мөр нэмэх')];
+  }
+  app.appendChild(sec('contacts','contactsTitle','contactsLead',table('contacts',[['company','Компани'],['answer','Хариу'],['next','Цаашид']])));
+  app.appendChild(sec('sites','sitesTitle','sitesLead',table('sites',[['company','Компани'],['adult','Том хүн, ₮','num'],['newyear','Шинэ жил, ₮','num'],['child','Хүүхэд, ₮','num'],['route','Маршрут'],['status','Өнөөдрийн байдал'],['phone','Утас','num']])));
+  app.appendChild(sec('risks','risksTitle','risksLead',[h('div',{class:'risks'},S.risks.map(function(r,i){
+    return h('div',{class:'risk'},[X('risks.'+i),T('b','risks.'+i+'.title'),T('span','risks.'+i+'.text')]);
+  })),ADD('risks','Эрсдэл нэмэх')]));
+  app.appendChild(sec('steps','stepsTitle','stepsLead',[h('ul',{class:'steps'},S.steps.map(function(s,i){
+    var cb=h('input',{type:'checkbox',id:'step-'+i,'data-act':'tick','data-path':'steps.'+i+'.done','aria-label':'Хийгдсэн'});
+    cb.checked=!!s.done;cb.disabled=!editing;
+    return h('li',{class:s.done?'done':''},[cb,T('span','steps.'+i+'.text','t'),X('steps.'+i)]);
+  })),ADD('steps','Алхам нэмэх')]));
+  app.appendChild(sec('sources','sourcesTitle',null,[h('ol',{class:'srcs'},S.sources.map(function(s,i){
+    if(editing)return h('li',null,[T('span','sources.'+i+'.label'),' · ',T('span','sources.'+i+'.url'),X('sources.'+i)]);
+    return h('li',null,[s.url?h('a',{href:s.url,target:'_blank',rel:'noopener',text:s.label||s.url}):h('span',{text:s.label})]);
+  })),ADD('sources','Эх сурвалж нэмэх')]));
+  app.appendChild(h('footer',{text:'Засах эрхтэй хүн "Засах" товчийг дараад нууц үгээ оруулж бүх текст, үнэ, зураг, мөрийг өөрчилнө.'}));
+}
+
+function say(msg,err){var s=$('status');s.textContent=msg||'';s.classList.toggle('err',!!err)}
+function saveDraft(){try{sessionStorage.setItem('dubai-draft',JSON.stringify(S))}catch(_){}}
+function clearDraft(){try{sessionStorage.removeItem('dubai-draft')}catch(_){}}
+function dirty(){say('Хадгалаагүй өөрчлөлт байна');saveDraft()}
+
+app.addEventListener('input',function(e){
+  var el=e.target.closest('[data-path]');
+  if(el&&el.isContentEditable){set(el.getAttribute('data-path'),el.innerText.replace(/\n+$/,''));dirty()}
+});
+app.addEventListener('paste',function(e){
+  var el=e.target.closest('[contenteditable="true"]');if(!el)return;
+  e.preventDefault();document.execCommand('insertText',false,(e.clipboardData||window.clipboardData).getData('text/plain'));
+});
+app.addEventListener('keydown',function(e){
+  var el=e.target.closest('[data-path]');
+  if(el&&e.key==='Enter'&&el.tagName!=='P'&&!el.classList.contains('t')&&!el.classList.contains('common')){e.preventDefault();el.blur()}
+});
+app.addEventListener('change',function(e){
+  var t=e.target;if(t.getAttribute('data-act')==='tick'){set(t.getAttribute('data-path'),t.checked);dirty();render()}
+});
+app.addEventListener('click',function(e){
+  var b=e.target.closest('button[data-act]');if(!b)return;
+  var act=b.getAttribute('data-act'),p=b.getAttribute('data-path');
+  if(act==='del'){var ks=p.split('.'),i=+ks.pop();get(ks.join('.')).splice(i,1);dirty();render()}
+  else if(act==='add'){var tpl=TPL[p.split('.').pop()];get(p).push(typeof tpl==='object'?JSON.parse(JSON.stringify(tpl)):tpl);dirty();render()}
+  else if(act==='img'){if(uploading)return;imgTarget=p;$('fileIn').value='';$('fileIn').click()}
+});
+
+function api(path,body){
+  return fetch(path,{method:'POST',headers:{'Content-Type':'application/json','x-edit-key':KEY||''},body:JSON.stringify(body||{})})
+    .then(function(r){return r.json().catch(function(){return {}}).then(function(j){j._status=r.status;return j})});
+}
+
+$('fileIn').addEventListener('change',function(){
+  var f=this.files&&this.files[0];if(!f||!imgTarget)return;
+  var target=imgTarget,max=target==='heroImg'?1600:1000;
+  var fr=new FileReader();
+  fr.onload=function(){var im=new Image();im.onload=function(){
+    var w=im.width,hh=im.height;if(w>max){hh=Math.round(hh*max/w);w=max}
+    var c=document.createElement('canvas');c.width=w;c.height=hh;c.getContext('2d').drawImage(im,0,0,w,hh);
+    var data=c.toDataURL('image/jpeg',0.8);
+    uploading++;render();say('Зураг хуулж байна…');
+    api('/api/upload',{dataUrl:data}).then(function(j){
+      uploading--;
+      if(j._status===200&&j.url){set(target,j.url);dirty();render();say('Зураг солигдлоо. Хадгалахаа мартуузай.')}
+      else if(j._status===401){render();lostKey()}
+      else{render();say('Зураг хуулж чадсангүй. Дахин оролдоно уу.',true)}
+    },function(){uploading--;render();say('Сүлжээний алдаа. Зураг хуулагдсангүй.',true)});
+  };im.onerror=function(){say('Энэ файлыг зураг болгож уншиж чадсангүй.',true)};im.src=fr.result};
+  fr.readAsDataURL(f);
+});
+
+function setMode(on){editing=on;$('btnEdit').hidden=on;$('btnSave').hidden=!on;$('btnCancel').hidden=!on;render()}
+function lostKey(){KEY=null;try{sessionStorage.removeItem('dubai-key')}catch(_){}say('Нууц үг буруу эсвэл солигдсон байна. Дахин нэвтэрнэ үү.',true);openLogin()}
+function openLogin(){$('login').hidden=false;$('pwErr').textContent='';$('pw').value='';setTimeout(function(){$('pw').focus()},30)}
+$('btnEdit').addEventListener('click',function(){
+  if(KEY){setMode(true);say('Засварлах горим: шар хүрээтэй хэсгийг дарж засна')}else openLogin();
+});
+$('pwCancel').addEventListener('click',function(){$('login').hidden=true});
+$('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();var pw=$('pw').value;if(!pw)return;$('pwOk').disabled=true;
+  fetch('/api/login',{method:'POST',headers:{'x-edit-key':pw}}).then(function(r){
+    $('pwOk').disabled=false;
+    if(r.status===200){KEY=pw;try{sessionStorage.setItem('dubai-key',pw)}catch(_){}$('login').hidden=true;setMode(true);say('Засварлах горим: шар хүрээтэй хэсгийг дарж засна')}
+    else if(r.status===401)$('pwErr').textContent='Нууц үг буруу байна.';
+    else $('pwErr').textContent='Серверт нууц үг тохируулаагүй байна (EDIT_PASSWORD).';
+  },function(){$('pwOk').disabled=false;$('pwErr').textContent='Сервертэй холбогдож чадсангүй.'});
+});
+$('btnCancel').addEventListener('click',function(){S=JSON.parse(ORIGINAL);clearDraft();setMode(false);say('Өөрчлөлтийг буцаалаа')});
+$('btnSave').addEventListener('click',function(){
+  if(uploading){say('Зураг хуулж дуустал түр хүлээнэ үү.');return}
+  var btn=this;btn.disabled=true;say('Хадгалж байна…');saveDraft();
+  api('/api/state',{state:S}).then(function(j){
+    btn.disabled=false;
+    if(j._status===200){ORIGINAL=JSON.stringify(S);clearDraft();setMode(false);say('Хадгаллаа')}
+    else if(j._status===401)lostKey();
+    else if(j._status===413)say('Хэт том байна. Зарим зургийг устгаад дахин хадгална уу.',true);
+    else say('Хадгалж чадсангүй. Дахин оролдоно уу.',true);
+  },function(){btn.disabled=false;say('Сүлжээний алдаа. Засвар энэ цонхонд хадгалагдсан, дахин дарна уу.',true)});
+});
+window.addEventListener('beforeunload',function(e){if(editing&&JSON.stringify(S)!==ORIGINAL){e.preventDefault();e.returnValue=''}});
+
+function offerDraft(){
+  var d=null;try{d=sessionStorage.getItem('dubai-draft')}catch(_){}
+  if(!d||d===JSON.stringify(JSON.parse(ORIGINAL))){clearDraft();return}
+  var bn=h('div',{class:'banner'},[h('span',{text:'Энэ цонхонд хадгалагдаагүй засвар үлдсэн байна.'}),
+    h('button',{class:'btn primary',type:'button',text:'Сэргээх'}),h('button',{class:'btn',type:'button',text:'Хаях'})]);
+  app.parentNode.insertBefore(bn,app);
+  var bs=bn.querySelectorAll('button');
+  bs[0].onclick=function(){if(!KEY){openLogin();return}S=JSON.parse(d);bn.remove();setMode(true);dirty()};
+  bs[1].onclick=function(){clearDraft();bn.remove()};
+}
+
+render();
+say('Ачаалж байна…');
+fetch('/api/state',{cache:'no-store'}).then(function(r){
+  if(r.status===404){say('');offerDraft();return}
+  if(!r.ok)throw 0;
+  return r.json().then(function(j){
+    if(j&&j.state){ORIGINAL=JSON.stringify(j.state);if(!editing){S=JSON.parse(ORIGINAL);render()}}
+    say('');offerDraft();
+  });
+}).catch(function(){say('Сүүлд хадгалсан хувилбарыг татаж чадсангүй. Анхны хувилбарыг харуулж байна.',true)});
+})();
+</script>
+</body>
+</html>
